@@ -23,6 +23,17 @@ pip install -r requirements.txt
 cp .env.example .env        # then open .env and paste your key after ANTHROPIC_API_KEY=
 ```
 
+**On Windows**, create the venv in a short folder instead, because pip hits Windows' 260-character path limit when the repo is nested deeply:
+
+```powershell
+python -m venv C:\venvs\ccarf
+C:\venvs\ccarf\Scripts\Activate.ps1      # if blocked: Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
+pip install -r requirements.txt
+copy .env.example .env
+```
+
+One venv works for every day's build.
+
 **Keep the key out of chat and out of git.** `.env` is in `.gitignore`. Run `git status` before every commit: if `.env` ever shows up, stop and don't commit.
 
 Cost: `scenarios.py` makes about 15–30 API calls per full run on the default model (`claude-opus-5-5`, effort `medium`). That's a few US cents. You can set `EFFORT=low` in `.env` to make it cheaper.
