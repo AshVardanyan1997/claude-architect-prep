@@ -29,4 +29,4 @@ day-NN-topic/
 ## Other files
 
 - [error-log.md](error-log.md): one line for every quiz miss. Day 7 is built from it.
-- Builds never need an API key. Each one has a mock path, and if you add a key, keep it in a `.env` file, which git ignores.
+- Builds call the real Claude API with your key. Each build folder has a `.env.example`: copy it to `.env` and put the key there. `.env` is git-ignored, so never paste the key into chat or commit it. Each build costs a few cents per run.

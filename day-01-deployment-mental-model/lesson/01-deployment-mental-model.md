@@ -233,4 +233,4 @@ A chat backend holds the history and sends the full history on every turn. Criti
 
 ---
 
-**Next:** do the homework in [`../homework/`](../homework/), starting with `01-build-support-agent-scaffold.md`.
+**Next:** do the homework in [`../homework/`](../homework/), starting with `01-build-support-agent.md`, where you run this exact S1 architecture against the real API.
