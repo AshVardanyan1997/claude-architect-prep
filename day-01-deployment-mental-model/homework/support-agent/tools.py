@@ -13,7 +13,9 @@ TOOLS = [
     {
         "name": "get_customer",
         # TODO(exercise 1): this description is too vague. Improve it.
-        "description": "Looks up information.",
+        "description": ("Identify user by their ID, email or name"
+                        "in case of several matches verify all attributes ID, email, name"
+                        ),
         "input_schema": {
             "type": "object",
             "properties": {"query": {"type": "string"}},
@@ -23,7 +25,10 @@ TOOLS = [
     {
         "name": "lookup_order",
         # TODO(exercise 1): this description is too vague. Improve it.
-        "description": "Retrieves information.",
+        "description": ("Find an order by order_id"
+                        "Only use if customer is verified"
+                        "If no order found return nothing"
+                        "if you found multiple orders with the same order_id don't proceed, escalate to human"),
         "input_schema": {
             "type": "object",
             "properties": {"order_id": {"type": "string"}},

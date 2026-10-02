@@ -20,6 +20,11 @@ def before_tool(name: str, tool_input: dict, state: dict) -> tuple[bool, str]:
          to use escalate_to_human instead (redirect, don't just refuse).
     """
     # TODO(exercise 2): enforce the rules above. Right now everything is allowed.
+    if name=="process_refund" and "verified_customer_id" not in state.keys():
+        return False, "customer is not verified"
+    if name=="process_refund" and tool_input["amount"] > REFUND_LIMIT:
+        return False, "refund amount exceeds the limit, escalate_to_human"
+    
     return True, ""
 
 
@@ -37,4 +42,5 @@ def after_tool(name: str, tool_input: dict, result: dict, state: dict) -> dict:
 
     # STRETCH (exam task 5.1): lookup_order returns ~14 fields. Return only the ones
     # a support agent needs, and convert delivered_at (a Unix timestamp) to ISO 8601.
+
     return result
