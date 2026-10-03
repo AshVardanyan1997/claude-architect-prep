@@ -13,8 +13,11 @@ TOOLS = [
     {
         "name": "get_customer",
         # TODO(exercise 1): this description is too vague. Improve it.
-        "description": ("Identify user by their ID, email or name"
-                        "in case of several matches verify all attributes ID, email, name"
+        "description": ("Find a customer account in the system. "
+                        "Input query is one of the these attributes ID('C-101'), email or name. "
+                        "Customers who are not in the system are not allowed to proceed with refund or lookup order steps. "
+                        "In case of several matches verify all attributes ID, email, name. "
+                        "Never guess and pick on your behalf. "
                         ),
         "input_schema": {
             "type": "object",
@@ -25,9 +28,10 @@ TOOLS = [
     {
         "name": "lookup_order",
         # TODO(exercise 1): this description is too vague. Improve it.
-        "description": ("Find an order by order_id"
-                        "Only use if customer is verified"
-                        "If no order found return nothing"
+        "description": ("Find verified customer order in the system. "
+                        "Input property is order_id. "
+                        "Only use if customer is verified. "
+                        "If no order found return nothing. "
                         "if you found multiple orders with the same order_id don't proceed, escalate to human"),
         "input_schema": {
             "type": "object",
