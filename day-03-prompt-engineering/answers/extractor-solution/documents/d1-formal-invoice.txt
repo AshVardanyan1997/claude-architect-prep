@@ -1,0 +1,21 @@
+NORTHWIND SUPPLIES LTD
+14 Harbour Road, Bristol BS1 4DJ
+
+INVOICE
+
+Invoice no.:    INV-2026-0412
+Invoice date:   2026-09-03
+Due date:       2026-10-03
+Customer PO:    PO-7781
+Bill to:        Acme Analytics Inc.
+
+| Item                | Qty | Unit price | Amount  |
+|---------------------|-----|------------|---------|
+| Ergonomic office chair |  3  |   149.00   |  447.00 |
+| LED desk lamp       |  2  |    32.50   |   65.00 |
+
+Subtotal:   512.00
+Sales tax (8%):  40.96
+TOTAL DUE (USD):  552.96
+
+Payment terms: Net 30

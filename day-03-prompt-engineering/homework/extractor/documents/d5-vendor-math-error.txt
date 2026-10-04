@@ -1,0 +1,10 @@
+BRIGHTLINE PRINTING CO.
+Invoice #BP-5530          Date: 2026-08-28          Terms: Due on receipt
+
+Description                         Qty    Unit     Line total
+Business cards, 500 pack             2     40.00      80.00
+Poster print A2                      1     25.00      25.00
+
+                                         Subtotal    115.00
+                                         Tax          0.00
+                                         Total       115.00

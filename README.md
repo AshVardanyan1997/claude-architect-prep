@@ -20,7 +20,7 @@ day-NN-topic/
 |---|---|---|---|
 | 1 | Fri Oct 2 | [Deployment mental model](day-01-deployment-mental-model/) | done: quiz 12/12, build reviewed |
 | 2 | Sat Oct 3 | [Agentic architecture & orchestration (27%)](day-02-agentic-architecture/) | done: quiz 14/15, build reviewed |
-| 3 | Sun Oct 4 | Prompt engineering & structured output, part 1 (20%) | coming |
+| 3 | Sun Oct 4 | [Prompt engineering & structured output, part 1 (20%)](day-03-prompt-engineering/) | ready |
 | 4 | Mon Oct 5 | Prompt engineering part 2, batch, Claude Code in CI | coming |
 | 5 | Tue Oct 6 | Claude Code configuration (20%) + tools & MCP (18%) | coming |
 | 6 | Wed Oct 7 | Context & reliability (15%) + timed 60-question mock | coming |

@@ -1,0 +1,42 @@
+{
+  "_how_to_read": "Gold answers used by checks.py. A plain value must match exactly (null means the field must be null). {\"one_of\": [...]} accepts any listed value. {\"not_null\": true} accepts any non-null value. line_amounts lists the expected line-item amounts in order. semantic_errors says whether validate.py should flag the record.",
+  "d1-formal-invoice": {
+    "vendor_name": {"contains": "northwind"}, "invoice_number": "INV-2026-0412",
+    "issue_date": "2026-09-03", "due_date": "2026-10-03", "purchase_order": "PO-7781",
+    "currency": "USD", "subtotal": 512.0, "tax_amount": 40.96, "total": 552.96,
+    "line_amounts": [447.0, 65.0], "category": "goods", "semantic_errors": false
+  },
+  "d2-email-narrative": {
+    "vendor_name": {"contains": "lumen"}, "invoice_number": "88",
+    "issue_date": "2026-10-04", "due_date": null, "payment_terms": {"not_null": true},
+    "purchase_order": null, "currency": "EUR", "subtotal": {"one_of": [3040.0, null]},
+    "tax_amount": 0.0, "total": 3040.0, "line_amounts": [3040.0], "category": "services",
+    "semantic_errors": false
+  },
+  "d3-informal-receipt": {
+    "vendor_name": {"contains": "joe"}, "invoice_number": null,
+    "issue_date": "2026-09-14", "due_date": null, "purchase_order": null,
+    "currency": "USD", "subtotal": {"one_of": [15.49, null]}, "tax_amount": null, "total": 15.49,
+    "line_amounts": [8.5, 6.99], "category": "goods", "semantic_errors": false
+  },
+  "d4-german-conference": {
+    "vendor_name": {"contains": "devsummit"}, "invoice_number": "DS-26-1187",
+    "issue_date": "2026-09-03", "due_date": "2026-09-17", "purchase_order": null,
+    "currency": "EUR", "subtotal": 690.0, "tax_amount": 131.1, "total": 821.1,
+    "line_amounts": [690.0], "category": "other", "category_detail": {"not_null": true},
+    "semantic_errors": false
+  },
+  "d5-vendor-math-error": {
+    "vendor_name": {"contains": "brightline"}, "invoice_number": "BP-5530",
+    "issue_date": "2026-08-28", "due_date": {"one_of": [null, "2026-08-28"]}, "purchase_order": null,
+    "currency": null, "subtotal": 115.0, "tax_amount": 0.0, "total": 115.0,
+    "line_amounts": [80.0, 25.0], "category": {"one_of": ["goods", "services"]},
+    "semantic_errors": true
+  },
+  "d6-ambiguous-charge": {
+    "vendor_name": {"contains": "harlow"}, "invoice_number": {"one_of": ["HF-0099", null]},
+    "issue_date": null, "due_date": null, "purchase_order": null,
+    "currency": "GBP", "subtotal": {"one_of": [500.0, null]}, "tax_amount": null, "total": 500.0,
+    "line_amounts": [500.0], "category": "unclear", "semantic_errors": false
+  }
+}
