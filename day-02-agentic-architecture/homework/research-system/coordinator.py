@@ -18,16 +18,17 @@ import time
 
 from agents import AGENTS, spawn
 from common import log, run_agent, tool_result
+from concurrent.futures import ThreadPoolExecutor
 
 # TODO(exercise 1): replace the procedure with research goals and quality criteria.
-COORDINATOR_PROMPT = """You coordinate a research team and produce cited reports.
+import re
+from pathlib import Path
+import os 
 
-Follow these steps exactly:
-1. Delegate search tasks for the topic's subtopics. For creative industries, the subtopics are
-   AI in digital art, AI in graphic design, and AI in photography.
-2. When the searches are done, delegate the report to the synthesis agent.
-3. Return the synthesis agent's report as your final answer, unchanged."""
+SYSTEM_PROMPT = re.sub(r"<!--.*?-->", "", (Path(__file__).parent / "prompts" / "system.md").read_text(),
+                       flags=re.S).strip()
 
+COORDINATOR_PROMPT = SYSTEM_PROMPT
 DELEGATE_TOOL = {
     "name": "delegate",
     "description": (
@@ -49,16 +50,15 @@ DELEGATE_TOOL = {
 
 def execute_delegations(calls, trace, verbose):
     """Run the delegate calls from ONE coordinator response."""
-    # TODO(exercise 4): these run one after another. Use concurrent.futures.ThreadPoolExecutor
-    # so that several delegations in the same response run at the same time.
-    results = []
-    for call in calls:
+    def one(call):
         log(trace, "coordinator", "delegate-start", f"{call.input['agent']}: {call.input['task']}", verbose)
         output = spawn(call.input["agent"], call.input["task"], trace, verbose)
         log(trace, "coordinator", "delegate-end", f"{call.input['agent']} returned {len(output)} chars", verbose)
-        results.append(tool_result(call.id, output))
-    return results
+        return tool_result(call.id, output)
 
+    # All delegations from one response run at the same time; results come back together.
+    with ThreadPoolExecutor(max_workers=max(1, len(calls))) as pool:
+        return list(pool.map(one, calls))
 
 def research(topic: str, verbose: bool = True):
     trace = []

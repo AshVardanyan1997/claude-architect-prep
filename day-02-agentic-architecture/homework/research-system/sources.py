@@ -62,12 +62,15 @@ def read_source(source_id: str) -> dict:
     source_id = source_id.strip().upper()
     try:
         return _fetch(source_id)
-    except Exception:
-        # TODO(exercise 3): this hides the failure. The agent sees an empty source and
-        # carries on as if it had read it. Return a structured error instead: what
-        # failed, whether it's retryable, what was attempted, and what to do next.
-        # Also tell apart "doesn't exist" (KeyError) from "timed out" (SourceTimeout).
-        return {"id": source_id, "text": ""}
+    except SourceTimeout as exc:
+            return {"isError": True, "errorCategory": "transient", "isRetryable": True,
+                    "attempted": {"tool": "read_source", "source_id": source_id},
+                    "message": f"Timed out reading {source_id}: {exc}. Retry once; if it fails again, "
+                               "report this source as unavailable and continue with the others."}
+    except KeyError:
+        return {"isError": True, "errorCategory": "validation", "isRetryable": False,
+                "attempted": {"tool": "read_source", "source_id": source_id},
+                "message": f"No source with id {source_id}. Use an id returned by search_corpus."}
 
 
 def run(name: str, tool_input: dict):

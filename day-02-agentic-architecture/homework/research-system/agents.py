@@ -19,7 +19,8 @@ AGENTS = {
                        "Give it a specific subtopic, not the whole question.",
         # TODO(exercise 2): ask for structured findings instead of prose.
         "system": "You are a research assistant. Search the library for the subtopic you're given, "
-                  "read the relevant sources, and summarize what you learned in a few paragraphs.",
+                  "read the relevant sources, and summarize what you learned in a few paragraphs. "
+                  "The finding have to be returned in a specific structure - claim, evidence quote, source id, title, date and what was measured.",
         "tools": sources.TOOLS,
     },
     "synthesis": {
@@ -27,7 +28,8 @@ AGENTS = {
                        "can't search, so it only knows what you put in its task.",
         # TODO(exercise 2): keep conflicting values with attribution, cite sources, mark gaps.
         "system": "You write clear research reports. When sources give different numbers for the same "
-                  "statistic, choose the most reliable one so the reader gets a single clear answer.",
+                  "statistic, choose the most reliable one so the reader gets a single clear answer. "
+                  "Use `[S3]` style ids for citation, keep conflicting numbers side by side with their sources and end with coverage-gaps sections.",
         "tools": [],
     },
 }
