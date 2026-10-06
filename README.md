@@ -20,11 +20,11 @@ day-NN-topic/
 |---|---|---|---|
 | 1 | Fri Oct 2 | [Deployment mental model](day-01-deployment-mental-model/) | done: quiz 12/12, build reviewed |
 | 2 | Sat Oct 3 | [Agentic architecture & orchestration (27%)](day-02-agentic-architecture/) | done: quiz 14/15, build reviewed |
-| 3 | Sun Oct 4 | [Prompt engineering & structured output, part 1 (20%)](day-03-prompt-engineering/) | ready |
-| 4 | Mon Oct 5 | Prompt engineering part 2, batch, Claude Code in CI | coming |
-| 5 | Tue Oct 6 | Claude Code configuration (20%) + tools & MCP (18%) | coming |
-| 6 | Wed Oct 7 | Context & reliability (15%) + timed 60-question mock | coming |
-| 7 | Thu Oct 8 | Review the error log, targeted drills, cheat sheet | coming |
+| 3 | Sun Oct 4 | [Prompt engineering & structured output, part 1 (20%)](day-03-prompt-engineering/) | done: quiz 14/15 |
+| 4 | Wed Oct 7 | [Tools & MCP (18%) + Claude Code configuration (20%)](day-04-tools-mcp-claude-code/) | ready |
+| 5 | Thu Oct 8 | Prompt engineering part 2 + Claude Code in CI, error log review. Stop by evening | coming |
+
+**Mock exam (Oct 6, claudecertificationguide.com, third-party):** 815/1000, passed. D1 13/14, D2 7/11, D3 9/12, D4 9/12, D5 11/11. The last two days were re-planned around D2 and D3.
 
 ## Other files
 
