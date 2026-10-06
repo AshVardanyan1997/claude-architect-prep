@@ -27,6 +27,111 @@ Three questions settle most items in Domain 3:
 
 ---
 
+## 0.5 The files themselves, from scratch
+
+Everything in the map above is **just a Markdown file in a folder**. Claude Code finds it by its name and location. There's no registration step and no build: create the file, and the next session picks it up.
+
+### What "frontmatter" is
+
+Frontmatter is a small block of settings at the **very top** of a Markdown file, between two lines of three dashes. It's written in YAML (`key: value`). Everything below the second `---` is the **body**.
+
+```markdown
+---                                  ← frontmatter starts (must be line 1)
+paths: ["src/api/**/*"]              ← settings, read by Claude Code
+---                                  ← frontmatter ends
+# API conventions                    ← body: instructions, read by Claude
+- Every handler returns {"data": ...}
+```
+
+The split matters:
+
+- **Frontmatter is for Claude Code, the program.** It decides *when* the file loads, *which tools* are allowed, and *how* the file runs.
+- **The body is for Claude, the model.** It's the actual instructions.
+
+Not every file has frontmatter. CLAUDE.md usually doesn't, because it always loads. A rule file needs it only to set `paths:`. A skill needs it for its `name`, its `description` and its options.
+
+### Four files, start to finish
+
+Here is what's on disk in a small repo, and when each file reaches Claude:
+
+```
+acme-shop/
+├── CLAUDE.md                          ① always loaded
+├── src/billing/CLAUDE.md              ② loaded when Claude works in src/billing/
+├── docs/billing-standards.md              (pulled in by ② via @import)
+└── .claude/
+    ├── rules/testing.md               ③ loaded when Claude touches a matching file
+    ├── commands/review.md             ④ runs when someone types /review
+    └── skills/dep-report/SKILL.md     ⑤ runs on /dep-report, or when Claude decides it fits
+```
+
+**① `CLAUDE.md`: no frontmatter, always on.** It's plain instructions, loaded at the start of every session.
+
+```markdown
+# acme-shop
+- Python 3.12. Type hints on every public function.
+- Run `pytest -q` before saying a change is done.
+```
+
+**② A folder CLAUDE.md with an `@import`.** A line `@path` pastes another file's content in at that point. The path is relative to this file.
+
+```markdown
+# Billing
+@../../docs/billing-standards.md
+```
+
+**③ A rule: frontmatter decides WHEN it loads.** Without `paths:`, a rule file loads every session, like CLAUDE.md. With `paths:`, it loads only when Claude reads or edits a file that matches the glob.
+
+```markdown
+---
+paths: ["**/test_*.py"]
+---
+- One behaviour per test, named test_<function>_<behaviour>.
+```
+
+Globs: `*` is any characters within one folder, and `**/` is any number of folders. So `**/test_*.py` matches `src/api/test_orders.py` and `a/b/c/test_x.py`.
+
+**④ A command: the file name becomes the slash command.** `.claude/commands/review.md` becomes `/review`. The body is the prompt that gets sent, and `$ARGUMENTS` is replaced with whatever you type after the command.
+
+```markdown
+Review the uncommitted diff against CLAUDE.md. Report bugs and rule violations only,
+as file:line, issue, fix. Focus on: $ARGUMENTS
+```
+
+**⑤ A skill: a folder with `SKILL.md`, and frontmatter that configures it.**
+
+```markdown
+---
+name: dep-report
+description: Report where a package is used and what breaks on upgrade.
+context: fork                    # run in an isolated sub-agent, return only the result
+allowed-tools: Read, Grep, Glob  # read-only: it can't edit or run commands
+argument-hint: "[package-name]"  # shown when someone types /dep-report with no argument
+---
+Find every import of $ARGUMENTS ...
+```
+
+A skill's `description` works like a tool description (Domain 2). Claude reads it to decide whether the skill fits the task.
+
+**Command or skill?** A command is a saved prompt you trigger by name. A skill is a packaged workflow with its own settings (isolation, tool limits), which Claude can also pick on its own. Newer Claude Code versions treat both as skills, but the exam keeps them separate. Answer as the guide does.
+
+### Check yourself (answers below)
+
+1. A file starts with `# Testing` on line 1 and has `---` and `paths:` on line 3. Does the path rule work?
+2. You want `/deploy-check` available to everyone on the team. What's the exact file path?
+3. Which frontmatter field keeps a skill from editing files?
+4. A rule in `.claude/rules/style.md` has no frontmatter at all. When does it load?
+
+<details><summary>Answers</summary>
+
+1. No. The frontmatter must start on line 1, so the `---` block is treated as ordinary text.
+2. `.claude/commands/deploy-check.md`, committed to git.
+3. `allowed-tools`, limited to read-only tools such as `Read, Grep, Glob`.
+4. Every session, like CLAUDE.md. Only `paths:` makes a rule conditional.
+</details>
+
+---
+
 ## 1. Domain 3: Claude Code configuration
 
 ### 3.1 CLAUDE.md hierarchy
