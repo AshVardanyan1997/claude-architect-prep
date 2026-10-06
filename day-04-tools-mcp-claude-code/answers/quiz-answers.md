@@ -22,7 +22,7 @@ Multiple-response questions score only if every pick is right. 12+ means you're 
 
 ## Pattern to notice
 
-Questions 1, 4 and 14 come down to **who gets it**: the repo (team) or `~/` (you). Questions 5, 6 and 10 come down to **the tool description and tool list, not the system prompt**. Whenever an option adds a prompt rule to fix tool routing ("Always use X", "Don't search"), look for the option that fixes the tool itself.
+Questions 1, 4 and 14 come down to **who gets it**: the repo (team) or `~/` (you). Questions 5, 6 and 10 come down to **the tool description and tool list, not the system prompt**. Whenever an option adds a prompt rule to fix tool routing ("Always use X", "Don't search"), look for the option that fixes the tool itself. The flip side is Q16: if the descriptions are already good, the system prompt may be *causing* the misrouting with its wording. Adding a prompt rule doesn't fix a routing problem, but removing a prompt's misleading wording can.
 
 ## Bonus questions (aimed at your mock misses)
 
