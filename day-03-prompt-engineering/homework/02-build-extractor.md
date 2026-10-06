@@ -39,6 +39,7 @@ pip install -r requirements.txt     # already installed if you use the same venv
 ## Step 1: baseline (10 min)
 
 ```powershell
+python check_schema.py    # free: the schema is valid JSON Schema
 python test_offline.py    # free: 18 of 23 fail on purpose
 python checks.py          # live
 python extract.py documents\d6-ambiguous-charge.txt
@@ -48,7 +49,7 @@ Before reading the results, predict what the starter will put in `currency` for 
 
 ## Step 2: four fixes, four layers
 
-Do them in this order. Run `test_offline.py` after each code fix, and `checks.py` after exercises 1 and 2.
+Do them in this order. Run `check_schema.py` after every schema edit, `test_offline.py` after each code fix, and `checks.py` after exercises 1 and 2.
 
 1. **Schema** (`schema.py`, exam 4.3). Make fields a document may lack nullable, including line-item `quantity` and `unit_price`. Add `"other"` + a `category_detail` field and `"unclear"` to the category. Give every field a description that says what goes in it and in what format. The docstring has the strict-mode rules.
 2. **Prompt** (`prompts/system.md`, exam 4.1, 4.2). Write it **from a blank page**. Delete the starter text rather than editing around it. It must have:
@@ -61,7 +62,7 @@ Do them in this order. Run `test_offline.py` after each code fix, and `checks.py
 
 **Target:** `test_offline.py` 23/23 and `checks.py` 6/6. A run can vary, so if one document fails, rerun only that one before changing the prompt.
 
-**If the API returns a 400 about the schema,** paste the error message in the thread. Don't paste your `.env`.
+**If the API returns `400 ... JSON schema is invalid`,** run `python check_schema.py`. It's free and prints the exact field that's wrong. The usual cause is a Python `None` where JSON needs the string `"null"`.
 
 ## Step 3: notes and push
 
