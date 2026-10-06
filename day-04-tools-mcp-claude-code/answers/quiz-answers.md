@@ -23,3 +23,13 @@ Multiple-response questions score only if every pick is right. 12+ means you're 
 ## Pattern to notice
 
 Questions 1, 4 and 14 come down to **who gets it**: the repo (team) or `~/` (you). Questions 5, 6 and 10 come down to **the tool description and tool list, not the system prompt**. Whenever an option adds a prompt rule to fix tool routing ("Always use X", "Don't search"), look for the option that fixes the tool itself.
+
+## Bonus questions (aimed at your mock misses)
+
+| Q | Answer | Rule |
+|---|---|---|
+| 16 | **B** | When the descriptions are already good and routing is still wrong, look for system-prompt keywords that prime the wrong tool (2.1). "Root cause" asks for a cause, so A and D, which only name fixes, are out. Same as mock Q24 and Q56. |
+| 17 | **B** | The rule was vague, so make it specific where it lives (CLAUDE.md, 3.6). A hook can ban something but can't make Claude write the missing test, and a blanket ban also breaks valid unit tests. Same as mock Q51. |
+| 18 | **B** | Misrouting between similar tools is a naming and description problem (2.1). Forcing `tool_choice` makes one call required. It isn't a session-wide policy, and it blocks every other tool. Same as mock Q12. |
+
+**Ask "what caused this?" before "what blocks this?".** Hooks, forced `tool_choice` and removed tools are guarantees for must-never rules. When an instruction or description is vague, the fix is to make it specific.

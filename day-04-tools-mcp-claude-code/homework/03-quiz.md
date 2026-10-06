@@ -1,4 +1,4 @@
-# Day 4 quiz: Tools & MCP + Claude Code configuration (15 questions, 30 min)
+# Day 4 quiz: Tools & MCP + Claude Code configuration (15 questions + 3 bonus, 35 min)
 
 Three questions are **multiple-response**: the question says how many to pick, and you need all of them right to score it. Answers are in `../answers/quiz-answers.md`. Log misses in `../../error-log.md`.
 
@@ -111,3 +111,28 @@ Three questions are **multiple-response**: the question says how many to pick, a
 - C. Repeat the description in capital letters
 - D. Report the interacting problems one at a time in separate messages
 - E. Ask for "higher quality, production-ready" code
+
+---
+
+### Bonus: aimed at your mock misses (patterns 1 and 3)
+
+**16.** A support agent has well-written, clearly distinct tool descriptions for `lookup_invoice` and `adjust_billing`. Its system prompt says: "For any billing question, make sure the billing is adjusted correctly." It often calls `adjust_billing` when the customer only asks to see an invoice. What is the **root cause**?
+
+- A. The tool descriptions need more detail
+- B. The system prompt's wording ("billing … adjusted") creates an association with `adjust_billing` that overrides the descriptions
+- C. The agent has too many tools
+- D. There are no few-shot examples of invoice lookups
+
+**17.** Claude Code keeps writing unit tests with mocks, but the team needs integration tests. CLAUDE.md says only "Write integration tests for new endpoints." What's the best **first** step?
+
+- A. Add a PostToolUse hook that rejects any test file containing "mock"
+- B. Make the CLAUDE.md rule specific: integration tests use the real test database fixture `db_session`, call the endpoint over HTTP, and assert the response contract; mocks are allowed only in unit tests
+- C. Force a `write_integration_test` tool with `tool_choice`
+- D. Ask developers to review every generated test by hand
+
+**18.** An agent uses `query_prod_db` when developers ask about staging data. The two tools are named `query_db` and `query_db2`, both described as "Runs a SQL query." What's the best fix?
+
+- A. Set `tool_choice` to force `query_db2` (staging) for every request
+- B. Rename them `query_production_db` and `query_staging_db`, and say in each description which environment it hits and when to use the other
+- C. Remove the production tool from everyone's configuration
+- D. Add "be careful with production" to the system prompt
