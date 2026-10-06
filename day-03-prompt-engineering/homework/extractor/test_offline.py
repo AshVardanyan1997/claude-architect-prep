@@ -20,12 +20,16 @@ def check(name, condition):
 
 
 def accepts_null(prop):
+    if not isinstance(prop, dict):
+        return False
     if prop.get("type") == "null" or (isinstance(prop.get("type"), list) and "null" in prop["type"]):
         return True
     return any(accepts_null(p) for p in prop.get("anyOf", []))
 
 
 def objects(schema):
+    if not isinstance(schema, dict):  # e.g. a Python set typo; check_schema.py names it
+        return
     if schema.get("type") == "object":
         yield schema
         for p in schema.get("properties", {}).values():
