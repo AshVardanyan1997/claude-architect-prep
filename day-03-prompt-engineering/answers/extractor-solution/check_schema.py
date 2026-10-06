@@ -11,10 +11,16 @@ import jsonschema
 from schema import EXTRACT_TOOL
 
 validator = jsonschema.Draft202012Validator(jsonschema.Draft202012Validator.META_SCHEMA)
-errors = sorted(validator.iter_errors(EXTRACT_TOOL["input_schema"]), key=lambda e: list(e.absolute_path))
+errors = sorted(validator.iter_errors(EXTRACT_TOOL["input_schema"]), key=lambda e: list(map(str, e.absolute_path)))
+seen = set()
 for e in errors:
     where = "input_schema" + "".join(f"[{p!r}]" for p in e.absolute_path)
-    print(f"INVALID  {where}\n         {e.message}")
+    if where in seen:
+        continue
+    seen.add(where)
+    hint = ("  <- a Python set: you wrote a comma where JSON needs a colon, e.g. {\"type\", \"null\"} "
+            "instead of {\"type\": \"null\"}") if isinstance(e.instance, set) else ""
+    print(f"INVALID  {where}{hint}\n         {e.message}")
 print("schema is valid draft 2020-12" if not errors else
       "\nCommon causes: Python None where JSON needs the string \"null\" (write {\"type\": \"null\"}), "
       "or \"required\": True on a property (required is a list on the parent object).")
