@@ -140,6 +140,8 @@ isError: true
 | Understand unfamiliar code | Grep for the entry points, then Read and follow the imports. Don't read everything up front. |
 | Trace a function used through wrapper modules | List the exported names first, then Grep for each one |
 
+**Bash is the fallback, not the first pick.** When a built-in tool fits, the exam picks it over `sed`/`grep` in Bash: Grep to find the occurrences, then Edit each one. A blanket `sed` can't be reviewed change by change and hits every match, including comments and fixtures. (You missed this one on the mock.)
+
 ---
 
 ## 3. Cheat sheet: phrase in the stem → answer
@@ -163,3 +165,4 @@ isError: true
 | "Operation failed" everywhere | errorCategory + isRetryable + a message |
 | an agent with 18 tools picks the wrong ones | scope it to the 4–5 its role needs |
 | Edit fails on non-unique text | Read + Write |
+| replace a string across files: Bash `sed` or Grep + Edit? | Grep + Edit |
