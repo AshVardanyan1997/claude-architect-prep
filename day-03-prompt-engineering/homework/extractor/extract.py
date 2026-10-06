@@ -53,6 +53,23 @@ def extract(document: str, client=None) -> dict:
         return {"record": {}, "error": None, "attempts": 1}
 
 
+def extract(document: str, client=None) -> dict:
+    """Returns {"record": dict or None, "error": str or None, "attempts": int}."""
+    client = client or make_client()
+    messages = [{"role": "user", "content": f"<document>\n{document}\n</document>"}]
+    for attempt in (1, 2):
+        response = _create(client, messages)
+        if response.stop_reason == "refusal":
+            return {"record": None, "error": "refused", "attempts": attempt}
+        calls = [b for b in response.content if b.type == "tool_use" and b.name == TOOL_NAME]
+        if calls:
+            return {"record": dict(calls[0].input), "error": None, "attempts": attempt}
+        # "auto" let the model answer in text. Don't parse that text; ask once more, then give up loudly.
+        messages.append({"role": "assistant", "content": response.content})
+        messages.append({"role": "user", "content": f"You didn't call {TOOL_NAME}. Call it now with the data "
+                                                    "from the document, using null for anything it doesn't state."})
+    return {"record": None, "error": f"no {TOOL_NAME} call after 2 attempts", "attempts": 2}
+
 if __name__ == "__main__":
     path = sys.argv[1] if len(sys.argv) > 1 else "documents/d1-formal-invoice.txt"
     print(json.dumps(extract(Path(path).read_text()), indent=2))

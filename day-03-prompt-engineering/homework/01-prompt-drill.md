@@ -13,6 +13,7 @@ Don't open `../answers/prompt-drill-answers.md` until all five are written. Then
 **P1. Claude Code in CI, PR review** (`claude -p` in a GitHub Action)
 
 > Review this pull request and point out any problems you find. Be thorough, but only report issues you are highly confident about. Keep comments professional.
+> 
 
 **P2. Customer support agent, escalation** (system prompt)
 
