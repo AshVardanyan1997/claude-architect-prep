@@ -1,12 +1,9 @@
 ---
 name: dep-report
 description: Report where a third-party package is used in this repo and what would break if it were removed or upgraded.
-# EXERCISE 2 (exam 3.2): this skill reads many files and prints a long report.
-# Add three frontmatter fields:
-#   - one that runs it in an isolated sub-agent, so the report doesn't fill the main conversation
-#   - one that limits it to read-only tools (Read, Grep, Glob)
-#   - one that tells the developer what argument to pass when they type /dep-report with none
-# Then delete these comment lines.
+context: fork
+allowed-tools: Read, Grep, Glob, 
+argument-hint: "[package_name]"
 ---
 
 Find every import and use of the package named in $ARGUMENTS.

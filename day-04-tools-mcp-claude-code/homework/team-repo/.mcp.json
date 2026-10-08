@@ -4,7 +4,7 @@
       "command": "python",
       "args": ["mcp_server/orders_server.py"],
       "env": {
-        "ORDERS_API_TOKEN": "orders-live-3f9a1c7e"
+        "ORDERS_API_TOKEN": "${ORDERS_API_TOKEN}"
       }
     }
   }
